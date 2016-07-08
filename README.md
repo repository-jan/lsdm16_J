@@ -21,12 +21,10 @@ You have to input the following arguments, seperated by a blank:
   - **Argument 1** is to choose the project. So you have to put in the corresponding number of the above mentiond projects.
   - **Argument 2** should be the path to the data file.
   
-  - If argument 1 is 5
-    You have to put in 2 nodes to output distance between them.
+  - If argument 1 is 5: You have to put in 2 nodes to output distance between them.
     - **Argument 3** should be the name of the one node.
     - **Argument 4** should be the name of the other node.
     
-  - If argument 1 is 6
-    You have to put in the treshold modularity value you want to reach.
+  - If argument 1 is 6: You have to put in the treshold modularity value you want to reach.
     - **Argument 3** should be this treshold value.
 
