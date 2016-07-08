@@ -26,5 +26,9 @@ You have to input the following arguments, seperated by a blank:
     - **Argument 4** should be the name of the other node.
     
   - If argument 1 is 6: You have to put in the treshold modularity value you want to reach.
-    - **Argument 3** should be this treshold value.
+    - **Argument 3** should be the treshold value.
 
+Used Java 1.8.
+- java -jar LSDM_Projects_J.jar 5 [data file path] [node 1] [node 2]
+- java -jar LSDM_Projects_J.jar 6 [data file path] [treshold]
+- java -jar LSDM_Projects_J.jar 7 [data file path]
