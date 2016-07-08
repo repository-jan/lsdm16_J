@@ -1,4 +1,4 @@
-package problem5_algorithm;
+package project_5_algorithm;
 
 import java.util.ArrayList;
 import java.util.HashMap;

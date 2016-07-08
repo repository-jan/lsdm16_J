@@ -1,4 +1,4 @@
-package problem6_algorithm;
+package project_6_algorithm;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -14,19 +14,14 @@ import programming.StopWatch;
 public class P6Algorithms {
 	
 	// For console outputs.
-	private static boolean out = true;
-		
+	private static boolean out = false;
+
 	/** Performs the method of Girvan and Newman to detect communities. 
 	 * The mehtod is split into the following parts:
 	 * 	calculate all edges betweenness
 	 * 	delete the edge(s) with the highest value
 	 * 	find connected components
 	 * 	chek whether the graph is split enough by calculating modularity.
-	 * 
-	 * In addition, to maybe speed up the process, the edge betweenness is initially calculated for every edge,
-	 * but afterwards only for those edges, affected by the removal of the highes edge(s).
-	 * After removing the edge(s) the findAffectedGroups-method creats a subgraph of all that is reachable from the
-	 * two end of the removed edge. For split up graphs it should reduce computing.
 	 */
 	public static List<List<Node>> girvanNewmanMethod(Graph graph, double qThreshold) {
 		StopWatch stopWatch = new StopWatch();
@@ -34,21 +29,15 @@ public class P6Algorithms {
 		
 		int iteration = 0;
 		List<List<Node>> groups = null;
-		List<Edge> deletedEdges = null;
-		Graph subGraph = null;
 		double q = 0.0;
 		
-		do{
+		while( q < qThreshold ) {
 			iteration++;
 			/**/if(out) System.out.println(" iteration: " + iteration);
 			
-			subGraph = findAffectedGroups(graph, groups, deletedEdges);
+			calculateEdgeBetweenness(graph);
 			
-			/**/if(out) System.out.println("  nodecounter: " + subGraph.getNodes().size() + " / n=" + graph.getNodes().size());
-
-			calculateEdgeBetweenness(subGraph);
-			
-			deletedEdges = removeMaxValueEdges(graph);
+			removeMaxValueEdges(graph);
 			
 			groups = findGroups(graph);
 			/**/if(out) System.out.println("   found " + groups.size() + " group(s)");
@@ -57,8 +46,7 @@ public class P6Algorithms {
 				
 			/**/if(out) System.out.println("  q=" + q + " >= qT=" + qThreshold + " ?");
 			/**/if(out) System.out.println("  " + stopWatch.stopTime());
-			
-		}while( q < qThreshold );
+		}
 		
 		/**/if(out) System.out.println("   yes -> exiting loop...");
 		System.out.println(" finished after " + iteration + " iteration(s).");
@@ -99,7 +87,6 @@ public class P6Algorithms {
 			}
 			
 			// Starting from the root going down the graph using BFS, assigning levels and #SPs to nodes:
-//			Queue<Node> q = new LinkedHashSet()<>;
 			UniqueQueue<Node> q = new UniqueQueue<>();
 			v.setLevel(0);
 			v.setValue(1);
@@ -228,6 +215,48 @@ public class P6Algorithms {
 		}
 		q = q / (2.0*m);
 		return q;
+	}
+	
+	/** In addition, to maybe speed up the process, the edge betweenness is initially calculated for every edge,
+	 * but afterwards only for those edges, affected by the removal of the highes edge(s).
+	 * After removing the edge(s) the findAffectedGroups-method creats a subgraph of all that is reachable from the
+	 * two end of the removed edge. For split up graphs it should reduce computing.
+	 */
+	public static List<List<Node>> girvanNewmanMethodSplit(Graph graph, double qThreshold) {
+		StopWatch stopWatch = new StopWatch();
+		stopWatch.startTimer();
+		
+		int iteration = 0;
+		List<List<Node>> groups = null;
+		List<Edge> deletedEdges = null;
+		Graph subGraph = null;
+		double q = 0.0;
+		
+		while( q < qThreshold ) {
+			iteration++;
+			/**/if(out) System.out.println(" iteration: " + iteration);
+			
+			subGraph = findAffectedGroups(graph, groups, deletedEdges);
+			
+			/**/if(out) System.out.println("  nodecounter: " + subGraph.getNodes().size() + " / n=" + graph.getNodes().size());
+
+			calculateEdgeBetweenness(subGraph);
+			
+			deletedEdges = removeMaxValueEdges(graph);
+			
+			groups = findGroups(graph);
+			/**/if(out) System.out.println("   found " + groups.size() + " group(s)");
+			
+			q = calculateQ(groups, graph.getEdges().size());
+				
+			/**/if(out) System.out.println("  q=" + q + " >= qT=" + qThreshold + " ?");
+			/**/if(out) System.out.println("  " + stopWatch.stopTime());
+		}
+		
+		/**/if(out) System.out.println("   yes -> exiting loop...");
+		System.out.println(" finished after " + iteration + " iteration(s).");
+		
+		return groups;
 	}
 	
 	/** Creates a subgraph containing what was connected before removing the edge(s). */

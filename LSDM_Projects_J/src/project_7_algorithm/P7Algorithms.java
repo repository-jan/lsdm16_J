@@ -1,4 +1,4 @@
-package problem7_algorithm;
+package project_7_algorithm;
 
 import java.util.ArrayList;
 import java.util.List;

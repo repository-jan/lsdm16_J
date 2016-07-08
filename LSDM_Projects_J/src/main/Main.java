@@ -7,10 +7,10 @@ import java.util.Scanner;
 import graph.Node;
 import graph.Graph;
 import parser.Parser;
-import problem5_algorithm.P5Algorithms;
-import problem6_algorithm.P6Algorithms;
-import problem7_algorithm.P7Algorithms;
 import programming.StopWatch;
+import project_5_algorithm.P5Algorithms;
+import project_6_algorithm.P6Algorithms;
+import project_7_algorithm.P7Algorithms;
 
 public class Main {
 
