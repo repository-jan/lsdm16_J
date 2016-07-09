@@ -18,7 +18,7 @@ The nodes can be named using numbers and letters.
   
 Use the jar to run the projects.
 You have to input the following arguments, seperated by a blank:
-  - **Argument 1** is to choose the project. So you have to put in the corresponding number of the above mentiond projects.
+  - **Argument 1** is to choose the project. So you have to put in the corresponding number of the above mentioned projects.
   - **Argument 2** should be the path to the data file.
   
   - If argument 1 is 5: You have to put in 2 nodes to output distance between them.
